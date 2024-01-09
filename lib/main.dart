@@ -1,5 +1,8 @@
+import 'package:apple_gadgets_task/bindings/view_bindings.dart';
+import 'package:apple_gadgets_task/views/screens/home_page.dart';
 import 'package:apple_gadgets_task/views/screens/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,14 +13,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:const LoginPage(),
+      initialRoute: '/login',
+      getPages: [
+        GetPage(
+            name: '/login',
+            page: () => const LoginPage(),
+            binding: ViewBindings()),
+        GetPage(
+          name: '/homepage',
+          page: () => const HomePage(),
+        )
+      ],
     );
   }
 }
-

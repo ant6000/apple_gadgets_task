@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class LoginApiClient {
-  static Future<http.Response> loginUser(String email, String password) async {
+  static Future<http.Response> loginUser(String login, String password) async {
     final Uri url = Uri.parse(
         "https://peanut.ifxdb.com/api/ClientCabinetBasic/IsAccountCredentialsCorrect");
 
@@ -12,7 +12,7 @@ class LoginApiClient {
     };
 
     final Map<String, dynamic> body = {
-      "login": email,
+      "login": login,
       "password": password,
     };
 

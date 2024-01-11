@@ -1,15 +1,22 @@
+import 'dart:convert';
+
 import 'package:apple_gadgets_task/repository/login_services.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   RxBool showPassword = false.obs;
   RxBool isLoading = false.obs;
 
-  loginUser(String email, String password) async {
+  loginUser(String login, String password) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       isLoading.toggle();
-      final response = await LoginApiClient.loginUser(email, password);
+      final response = await LoginApiClient.loginUser(login, password);
       if (response.statusCode == 200) {
+        final loginToken = jsonDecode(response.body);
+        await prefs.setString('token', loginToken['token']);
+        await prefs.setString('login', login);
         Get.offNamed('/homepage');
         isLoading.toggle();
       } else {
